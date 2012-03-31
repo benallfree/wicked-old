@@ -1,0 +1,5 @@
+<?
+
+$config = array(
+  'events'=>array(),
+);
