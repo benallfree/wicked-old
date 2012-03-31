@@ -5,19 +5,22 @@
 <br style="clear:both"/>
 </div>
 <div class="footer">
-  <p>Copyright 2012, Ben Allfree</p>
-  <ul>
-        <li><a href="/about">About</a></li>
-        <li><a href="/how">How it Works</a></li>
-        <li><a href="/ben">Meet Your Coach</a></li>
-  </ul>
+  <? action('footer') ?>
+  <?
+  $links = apply_filters('footer_links', array());
+  ?>
+  <? if(count($links)>0): ?>
+    <ul>
+      <? foreach($links as $link): ?>
+        <li><a href="<?=$link['href']?>" style="<?= isset($link['style']) ? $link['style'] : '' ?>"><?=h($link['title'])?></a></li>
+      <? endforeach; ?>
+    </ul>
+  <? endif; ?>
   <br clear="both"/>
 </div>
-
+<? action('after_footer') ?>
 <script type="text/javascript">
   $(function () {
-    $("a.youtube").YouTubePopup({ autoplay: 0 });
-
     $('.button').click(function() {
       e = $(this).parents('form');        
       if( $(this).attr('href')==undefined && e.length==0 ) return true;

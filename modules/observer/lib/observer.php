@@ -5,9 +5,10 @@ function apply_filters($filter_name, $arg)
   return $arg;
 }
 
-function dispatch($event_name)
+function action($event_name)
 {
   global $__wicked;
+  if(!isset($__wicked['modules']['observer']['events'])) $__wicked['modules']['observer']['events'] = array();
   $events = $__wicked['modules']['observer']['events'];
   if(!isset($events[$event_name])) return;
   $event = $events[$event_name];

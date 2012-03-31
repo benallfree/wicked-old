@@ -2,6 +2,7 @@
 date_default_timezone_set('UTC');
 error_reporting(E_STRICT | E_ALL);
 
+if(!file_exists('config.php')) die("Please copy config.template.php to config.php");
 require_once('config.php');
 
 // Load core libraries
@@ -68,9 +69,6 @@ $__wicked_defaults['request'] = array(
   'current_url'=>$current_url,
   'protocol'=>$protocol,
 );
-
-
-require_once('app/config/app.php');
 
 
 $__wicked = array_merge($__wicked_defaults, $config);
