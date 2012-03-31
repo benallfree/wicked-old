@@ -34,10 +34,36 @@ function login($user, $location=null)
     setcookie("user_key", sha1($ckey), time()+60*60*24*COOKIE_TIME_OUT, "/");
     setcookie("user_name",$_SESSION['user_name'], time()+60*60*24*COOKIE_TIME_OUT, "/");
   }
-  dispatch('login', $current_user);
+  action('login', $current_user);
   if($location===null) $location = $config['after_login_url'];
   if($location) redirect_to($location);
 }
+
+
+function logout()
+{
+  global $db;
+  if(isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])) {
+  mysql_query("update `users` 
+  			set `ckey`= '', `ctime`= '' 
+  			where `id`='$_SESSION[user_id]' OR  `id` = '$_COOKIE[user_id]'") or die(mysql_error());
+  }			
+  
+  /************ Delete the sessions****************/
+  unset($_SESSION['user_id']);
+  unset($_SESSION['user_name']);
+  unset($_SESSION['user_level']);
+  unset($_SESSION['HTTP_USER_AGENT']);
+  
+  /* Delete the cookies*******************/
+  setcookie("user_id", '', time()-60*60*24*COOKIE_TIME_OUT, "/");
+  setcookie("user_name", '', time()-60*60*24*COOKIE_TIME_OUT, "/");
+  setcookie("user_key", '', time()-60*60*24*COOKIE_TIME_OUT, "/");
+  
+  flash_next("You have been logged out.");
+  redirect_to('/');
+}
+
 
 function get_user($user_email)
 {

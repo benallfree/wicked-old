@@ -145,7 +145,7 @@ foreach($__wicked['route_handlers'] as $ext=>$handler_info)
 }
 
 $root_fpath = dirname(__FILE__);
-$this_module_fpath = dirname($config['module_fpath']."/routes/{$try_route_path}");
+$this_module_fpath = $config['module_fpath']; //dirname($config['module_fpath']."/routes/{$try_route_path}");
 $this_module_vpath = "/$this_module_name/".dirname($try_route_path);
 $this_module_resource_vpath = substr($this_module_fpath, strlen($root_fpath));
 

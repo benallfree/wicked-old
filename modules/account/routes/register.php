@@ -98,6 +98,8 @@ if(p('doRegister')== 'Register')
 }
 
 ?>
+  <script src="<?=$this_module_resource_vpath?>/assets/js/jquery.observe_field.js"></script>
+  <script src="<?=$this_module_resource_vpath?>/assets/js/jquery.validate.js"></script>
   <script>
   $(document).ready(function(){
     $.validator.addMethod("username", function(value, element) {
