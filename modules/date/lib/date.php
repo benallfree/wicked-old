@@ -109,7 +109,8 @@ function beginning_of_week($dt=null)
 {
   if(!$dt) $dt=time();
   $parts = getdate($dt);
-  $dt = $dt - (($parts['wday']-1) * ONE_DAY);
+  $wday = $parts['wday'] > 0 ? $parts['wday']-1 : 0;
+  $dt = $dt - ($wday * ONE_DAY);
   $parts = getdate($dt);
   return mktime(0,0,0,$parts['mon'], $parts['mday'], $parts['year']);
 }
