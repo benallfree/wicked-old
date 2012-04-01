@@ -310,6 +310,21 @@
     color: black;
     background-color: transparent;
   }
+  .nav .submenu ul li.static:hover
+  {
+    color: black;
+    background-color: transparent;
+  }
+  .nav .submenu ul li.static a
+  {
+    color: black;
+    background-color: transparent;
+  }
+  .nav .submenu ul li.static a:hover
+  {
+    color: black;
+    background-color: transparent;
+  }
 
   .nav .submenu ul li:hover
   {

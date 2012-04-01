@@ -1,5 +1,8 @@
 <?
 
 $config = array(
-  'events'=>array(),
+  'events'=>array(
+    'action'=>array(),
+    'filter'=>array(),
+  ),
 );

@@ -1,5 +1,9 @@
 <?
 
+function script_tag($vpath)
+{
+  return "<script src='$vpath' type='text/javascript'></script>";
+}
 
 function image_tag($url)
 {

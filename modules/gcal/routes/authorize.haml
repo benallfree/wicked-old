@@ -1,0 +1,30 @@
+:php
+  if(p('code'))
+  {
+    $current_user->gcal_client->authenticate();
+    $current_user->set_meta('gcal_token', $current_user->gcal_client->getAccessToken());
+    flash_next("Your google calendar has been connected.");
+    redirect_to('/my/preferences');
+  }
+  if(p('disconnect'))
+  {
+    $current_user->set_meta('gcal_token', null);
+    flash_next('Your google calendar has been disconnected.');
+    redirect_to('/my/preferences');
+  }
+%h1 Google Calendar
+%p Your lesson schedule and other special events can be posted to your google calendar automatically. This is a great way to stay connected and make the most of your vocal training.
+-if($current_user->meta('gcal_token'))
+  %p
+    We are currently connected to your google calendar and events are being posted.
+  %p
+    %b Disconnect from your google calendar. No events will be posted.
+  %p
+    .button.large{:href=>'?disconnect=1'} Disconnect Me :(
+-else
+  %p
+    %b Authorize us to connect with your google calendar.
+  :php
+    $authUrl = $current_user->gcal_client->createAuthUrl();
+  %p
+    .button.large{:href=>$authUrl} Connect Me

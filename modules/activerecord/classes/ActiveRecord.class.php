@@ -84,7 +84,7 @@ class ActiveRecord
     $obj_name = singularize(tableize($this->klass));
     $event_name = "{$obj_name}_{$event_name}";
     $event_args[$obj_name] = $this;
-    apply_filters($event_name, $this);
+    do_filter($event_name, $this);
   }
   
   static function _find($klass, $params=array())
@@ -114,7 +114,7 @@ class ActiveRecord
   {
     $tn = singularize(tableize($klass));
     $event_name = "{$tn}_before_select";
-    $params = apply_filters($event_name, $params);
+    $params = do_filter($event_name, $params);
     
   	$tn = ActiveRecord::_model_table_name($klass);
     $columns = "$tn.*";
