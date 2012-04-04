@@ -16,6 +16,8 @@ function user_get_calendars($u)
 
 function user_get_gcal_client($u)
 {
+  global $__wicked;
+  
   $client = new apiClient();
   $client->setApplicationName("Google Calendar PHP Starter Application");
   
