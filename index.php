@@ -22,6 +22,7 @@ $__wicked_defaults = array(
   ),
   'use_theme'=>true,
   'use_ssl'=>true,
+  'locks'=>array(),
 );
 
 if (get_magic_quotes_gpc())
