@@ -22,6 +22,7 @@ function preload_module($module_fpath)
     'default_route'=>'index',
     'module_fpath'=>$module_fpath,
     'always_load'=>false,
+    'cache_fpath'=>$cache_fpath,
   );
   $config = array();
   $config_fname = $module_fpath."/config.php";
@@ -93,7 +94,9 @@ function load_module($m_name)
   $bootstrap_fname = $module_fpath."/codegen.php";
   if(file_exists($bootstrap_fname))
   {
+    lock($config['cache_fpath']);
     require($bootstrap_fname);
+    unlock($config['cache_fpath']);
   }
   
   return $config;
