@@ -10,7 +10,7 @@ $client->setApplicationName("Google Calendar PHP Starter Application");
 // client id, client secret, and to register your redirect uri.
 $client->setClientId('1005298202201-4pf0ta5q69sgkv86ouukbrpnhasm2q48.apps.googleusercontent.com');
 $client->setClientSecret('qhxqGTtGYntO1VqwmRcXL0Ji');
-$client->setRedirectUri('http://coaching.benallfree.com/google-api-php-client/examples/calendar/simple.php');
+$client->setRedirectUri('http://coaching.benallfree.com/gcal/authorize');
 $client->setDeveloperKey('AIzaSyBdVO1ZUi49sUtvRJeMeY_64rylrOqCIzU');
 $cal = new apiCalendarService($client);
 if (isset($_GET['logout'])) {

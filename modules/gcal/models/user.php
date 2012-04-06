@@ -14,17 +14,14 @@ function user_get_calendars($u)
 }
 
 
-function user_get_gcal_client($u)
+function user_get_gcal_client__d($u)
 {
   global $__wicked;
-  
-  $client = new apiClient();
-  $client->setApplicationName("Google Calendar PHP Starter Application");
-  
   $config = $__wicked['modules']['gcal']['config'];
   
-  // Visit https://code.google.com/apis/console?api=calendar to generate your
-  // client id, client secret, and to register your redirect uri.
+  $client = new apiClient();
+  $client->setApplicationName($__wicked['app_title']);
+  
   $client->setClientId($config['client_id']);
   $client->setClientSecret($config['client_secret']);
   $client->setRedirectUri('http://' . $_SERVER['HTTP_HOST'] . "/gcal/authorize");
@@ -33,11 +30,33 @@ function user_get_gcal_client($u)
   {
     $client->setAccessToken($u->meta('gcal_token'));
   }
+  $cal = new apiCalendarService($client); // required to create auth request
+  
   return $client;
 }
 
-function user_get_gcal_cal_service($u)
+function user_get_gcal_cal_service__d($u)
 {
   $service = new apiCalendarService($u->gcal_client);
   return $service;
+}
+
+function user_gcal_delete_all($cal_id)
+{
+  $nextPageToken = null;
+  do
+  {
+    $args = array();
+    if($nextPageToken)
+    {
+      $args['pageToken'] = $events['nextPageToken'];
+    }    
+    $events = $u->gcal_cal_service->events->listEvents($cal_id, $args);
+    foreach($events['items'] as $i)
+    {
+      if($i['status']=='cancelled') continue;
+      $res = $u->gcal_cal_service->events->delete($cal_id, $i['id']);
+    }
+    $nextPageToken = isset($events['nextPageToken']) ? $events['nextPageToken'] : null;
+  } while ($nextPageToken);
 }
