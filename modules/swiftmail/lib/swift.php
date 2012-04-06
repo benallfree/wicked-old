@@ -60,7 +60,13 @@ function swiftmail_lowlevel_send($data)
 
   if($config['use_php_mail'])
   {
-    mail($to[0], $subject, $body);
+    $headers = array();
+    foreach($config['from'] as $email=>$name)
+    {
+      $headers[] = sprintf("From: %s <%s>", $email, $name);
+    }
+    $headers = join("\r\n", $headers);
+    mail($to[0], $subject, $body, $headers);
     return;
   }
 
