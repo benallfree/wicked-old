@@ -5,9 +5,9 @@
 <br style="clear:both"/>
 </div>
 <div class="footer">
-  <? do_action('footer') ?>
+  <? event('footer') ?>
   <?
-  $links = do_filter('footer_links', array());
+  $links = event('footer_links', array());
   ?>
   <? if(count($links)>0): ?>
     <ul>
@@ -18,7 +18,7 @@
   <? endif; ?>
   <br clear="both"/>
 </div>
-<? do_action('after_footer') ?>
+<? event('after_footer') ?>
 <script type="text/javascript">
   $(function () {
     $('.button').click(function() {

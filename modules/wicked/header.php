@@ -4,17 +4,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/cupertino/jquery-ui.css" type="text/css" rel="stylesheet"/>
     <?
-    $vpaths = do_filter('scripts', array());
+    $vpaths = event('scripts', array());
     ?>
     <? foreach($vpaths as $vpath): ?>
       <script src="<?=$vpath?>" type="text/javascript"></script>
     <? endforeach; ?>
-    <title><?=do_filter('window_title', $__wicked['app_title'])?></title>
+    <title><?=event('window_title', $__wicked['app_title'])?></title>
     <link href="/modules/<?=$__wicked['theme']?>/style.css" type="text/css" rel="stylesheet"/>
   </head>
 <body>
   <div class='widget'>
-    <? do_action('render_widgets') ?>
+    <? event('render_widgets') ?>
 
     <? if(is_logged_in()): ?>
       <a href='/account/logout'>Logout</a>
@@ -27,10 +27,10 @@
  
   
 <div class="nav">
-  <div class="title"><a href="/"><?=do_filter('page_title', $__wicked['app_title'])?></a></div>
+  <div class="title"><a href="/"><?=event('page_title', $__wicked['app_title'])?></a></div>
   <div class="menu">
     <?
-    $links = do_filter('nav_links', array());
+    $links = event('nav_links', array());
     ?>
     <? if(count($links)>0): ?>
       <ul>
@@ -42,7 +42,7 @@
   </div>
   <br clear="both"/>
   <?
-  $links = do_filter('subnav_links', array());
+  $links = event('subnav_links', array());
   ?>
   <? if(count($links)>0): ?>
     <div class="submenu authenticated">

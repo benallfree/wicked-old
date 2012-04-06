@@ -2,7 +2,7 @@
 
 function is_postback($param=null)
 {
-  return count($_POST)>0 && ( $param ? p($param,false) : true );
+  return (count($_POST)>0 || count($_FILES)>0) && ( $param ? p($param,false) : true );
 }
 
 

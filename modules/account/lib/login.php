@@ -34,7 +34,7 @@ function login($user, $location=null)
     setcookie("user_key", sha1($ckey), time()+60*60*24*COOKIE_TIME_OUT, "/");
     setcookie("user_name",$_SESSION['user_name'], time()+60*60*24*COOKIE_TIME_OUT, "/");
   }
-  do_action('login', $current_user);
+  event('login', $current_user);
   if($location===null) $location = $config['after_login_url'];
   if($location) redirect_to($location);
 }
