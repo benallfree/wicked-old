@@ -39,7 +39,6 @@ function mail_to($email, $text=null)
   $args = array_shift($args);
   $s = splice_attrs($attrs, $args,$start);
   $email = h($email);
-  $text = __($text);
   return "<a href=\"mailto:$email\" $s>$text</a>";
 }
 
