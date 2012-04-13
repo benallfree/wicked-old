@@ -21,6 +21,11 @@ function login($user, $location=null)
   $ckey = GenKey();
   $user->ctime = $stamp;
   $user->ckey = $ckey;
+  if(!$user->is_active)
+  {
+    flash_next("Your account has been undeleted. Welcome back!");
+  }
+  $user->is_active=true;
   $user->save();
   
   global $current_user;
