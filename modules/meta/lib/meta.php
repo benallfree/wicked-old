@@ -9,8 +9,21 @@ function meta_get($o, $name, $default=null)
 
 function _meta_get($o, $name, $default)
 {
-  $m = Meta::find_or_create_by( array(
-    'conditions'=>array('class_name = ? and object_id = ? and name = ?', get_class($o), $o->id, $name),
+  global $__wicked;
+  $cache = &$__wicked['modules']['meta']['config']['object_cache'];
+  $class = get_class($o);
+  if(!isset($cache[$class])) $cache[$class] = array();
+  if(isset($cache[$class][$o->id][$name])) return $cache[$class][$o->id][$name];
+  $all_metas = Meta::find_all(array(
+    'conditions'=>array('class_name = ? and object_id = ?', $class, $o->id),
+  ));
+  foreach($all_metas as $m)
+  {
+    $cache[$class][$o->id][$m->name] = $m;
+  }
+  if(isset($cache[$class][$o->id][$name])) return $cache[$class][$o->id][$name];
+  
+  $m = Meta::create( array(
     'attributes'=>array(
       'class_name'=>get_class($o),
       'object_id'=>$o->id,
@@ -18,7 +31,7 @@ function _meta_get($o, $name, $default)
       'value'=>$default,
     ),
   ));
-  
+  $cache[$class][$o->id][$m->name] = $m;
   return $m;
 }
 
