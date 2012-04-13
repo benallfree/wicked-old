@@ -285,11 +285,12 @@ function time_in_words($seconds, $suffix='')
   $hour = 60*$minute;
   $day = 24*$hour;
   $year = 365*$day;
-  if($seconds/$year>1) return (int)($seconds/$year) . " years$suffix";
-  if($seconds/$day>1) return (int)($seconds/$day) . " days$suffix";
-  if($seconds/$hour>1) return (int)($seconds/$hour) . " hours$suffix";
-  if($seconds/$minute>1) return (int)($seconds/$minute) . " minutes$suffix";
-  return "{$seconds} seconds$suffix";
+  foreach( array('year', 'day', 'hour', 'minute') as $t)
+  {
+    $unit = (int)($seconds/$$t);
+    if($unit>=1) return $unit.($unit==1 ? " {$t}" : " {$t}s").$suffix;
+  }
+  return "{$seconds} second" . ($seconds>1 ? "s" : "").$suffix;
 }
 
 function ago($dt, $now=null, $suffix = ' ago')
