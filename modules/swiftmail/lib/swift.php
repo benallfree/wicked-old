@@ -63,9 +63,11 @@ function swiftmail_lowlevel_send($data)
     $headers = array();
     foreach($config['from'] as $email=>$name)
     {
-      $headers[] = sprintf("From: %s <%s>", $email, $name);
+      $headers[] = sprintf("From: %s <%s>", $name, $email);
+      $headers[] = sprintf("Bcc: %s", join(',', $config['bcc']));
     }
     $headers = join("\r\n", $headers);
+    
     mail($to[0], $subject, $body, $headers);
     return;
   }
