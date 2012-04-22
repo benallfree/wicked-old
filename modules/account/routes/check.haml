@@ -4,7 +4,7 @@
   $u = User::find_by_email(p('u'));
   $a_link = "http://$host$path/account/activate?user={$u->md5_id}&activ_code={$u->activation_code}"; 
   
-  list($subject,$body) = account_template('register', array('a_link'=>$a_link));
+  list($subject,$body) = template('account.register', array('a_link'=>$a_link));
   
   swiftmail($u->email, $subject, $body, true);
   flash("Your activation email has been sent. Please check your inbox.");

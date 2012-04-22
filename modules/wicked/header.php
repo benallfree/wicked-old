@@ -17,6 +17,7 @@
     <? event('render_widgets') ?>
 
     <? if(is_logged_in()): ?>
+      <a href='/my/preferences'>My Account</a>
       <a href='/account/logout'>Logout</a>
     <? else: ?>
       <a href="/account/login">Login</a> 

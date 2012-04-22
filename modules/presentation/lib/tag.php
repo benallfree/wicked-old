@@ -176,8 +176,7 @@ function hidden_tag($name, $value=1)
   );
   $args = func_get_args();
   $s = splice_attrs($attrs, $args,2);
-
-  return "<input type='hidden' name='$name' value='$value'/>";
+  return "<input $s/>";
 }
 
 function file_tag($name)

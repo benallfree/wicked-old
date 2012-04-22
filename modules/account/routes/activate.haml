@@ -12,7 +12,7 @@
     $u->save();
     flash_next("Thank you. Your account has been activated.");
     
-    list($subject,$body) = account_template('welcome');
+    list($subject,$body) = template('account.welcome');
     swiftmail($u->email, $subject, $body, true);
     
     

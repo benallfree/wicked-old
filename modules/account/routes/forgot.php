@@ -24,7 +24,7 @@ if (p('doReset')=='Reset')
     $path   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
     $reset_link = "http://$host$path/account/reset?user={$user->md5_id}&activ_code=$activ_code";
 
-    list($subject,$body) = account_template('forgot', array('reset_link'=>$reset_link));
+    list($subject,$body) = template('account.forgot', array('reset_link'=>$reset_link));
     swiftmail($user->email, $subject, $body);
     
 
