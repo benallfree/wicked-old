@@ -1,0 +1,20 @@
+:sass
+  .box
+    :width 600px
+    :margin 20px;
+    :margin-left auto
+    :margin-right auto
+    :padding 20px
+%h1 Invalid Secure URL
+%p
+  Sorry, the secure URL you tried to use was invalid.
+%p
+  Please check your secure URL code and try again.
+%p
+  .box.shadow
+    %form{:action=>'/sc', :method=>'get'}
+      %p
+        %b Your Token:
+        =text_tag('a', p('a'))
+        .button Go
+  

@@ -27,6 +27,7 @@ $mappings = array(
   'int'=>'integer',
   'tinyint'=>'check',
   'datetime'=>'date',
+  'mediumtext'=>'textarea',
   'longtext'=>'textarea',
   'text'=>'text',
   'varchar'=>'text',

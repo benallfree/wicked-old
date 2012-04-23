@@ -11,8 +11,9 @@ $config = array(
     'password'=>'',
   ),
   'debug'=>false,
-  'debug_emails'=>array(),
+  'debug_email'=>'',
   'from'=>'Wicked <wicked@benallfree.com',
   'bcc'=>array(),
   'use_php_mail'=>false,
+  'send_immediately'=>false,
 );

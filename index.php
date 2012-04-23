@@ -23,6 +23,7 @@ $__wicked_defaults = array(
   'use_theme'=>true,
   'use_ssl'=>true,
   'locks'=>array(),
+  'globals'=>array(),
 );
 
 if (get_magic_quotes_gpc())
@@ -130,7 +131,7 @@ foreach($__wicked['route_handlers'] as $ext=>$handler_info)
   foreach(array('','/'.$config['default_route'], '/index') as $extra)
   {
     $try_route_path = $route_path . $extra;
-    $body_template = $config['module_fpath']."/routes/{$try_route_path}.{$ext}";
+    $body_template = $config['fpath']."/routes/{$try_route_path}.{$ext}";
     if(file_exists($body_template))
     {
       list($module_name, $handler_name) = $handler_info;
@@ -145,8 +146,9 @@ foreach($__wicked['route_handlers'] as $ext=>$handler_info)
   }
 }
 
+extract($__wicked['globals'], EXTR_REFS);
 $root_fpath = dirname(__FILE__);
-$this_module_fpath = $config['module_fpath']; //dirname($config['module_fpath']."/routes/{$try_route_path}");
+$this_module_fpath = $config['fpath'];
 $this_module_vpath = "/$this_module_name/".dirname($try_route_path);
 $this_module_resource_vpath = substr($this_module_fpath, strlen($root_fpath));
 
@@ -159,11 +161,11 @@ if(file_exists($body_template))
   require($body_template);
 } else {
   $config = $theme_config;
-  require("modules/{$__wicked['theme']}/404.php");
+  require($theme_config['fpath']."/404.php");
 }
 $s = ob_get_clean();
 
 $config = $theme_config;
-if($__wicked['use_theme']) require("modules/{$__wicked['theme']}/header.php");
+if($__wicked['use_theme']) require($config['fpath']."/header.php");
 echo $s;
-if($__wicked['use_theme']) require("modules/{$__wicked['theme']}/footer.php");
+if($__wicked['use_theme']) require($config['fpath']."/footer.php");

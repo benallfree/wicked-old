@@ -25,9 +25,15 @@ $config = array(
   Debugging will send email only to the debug email addresses.
   */
   'debug'=>false,
+  'debug_email'=>'example@example.com',
   
   /*
   Want to bypass SMTP for testing? Use this.
   */
-  'use_php_mail'=>false,
+  'use_php_mail'=>true,
+  
+  /*
+  Send mail immediately instead of queuing
+  */
+  'send_immediately'=>true,
 );

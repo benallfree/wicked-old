@@ -1,7 +1,7 @@
 <?
 
-observe('meta_serialize', 'meta_serialize');
-observe('meta_unserialize', 'meta_unserialize');
+observe('meta_value_serialize', 'meta_serialize');
+observe('meta_value_unserialize', 'meta_unserialize');
 
 function meta_serialize($m)
 {

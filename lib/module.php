@@ -20,7 +20,8 @@ function preload_module($module_fpath)
   $default_config = array(
     'requires'=>array(),
     'default_route'=>'index',
-    'module_fpath'=>$module_fpath,
+    'fpath'=>$module_fpath,
+    'vpath'=>substr($module_fpath,strlen(ROOT_FPATH)),
     'always_load'=>false,
     'cache_fpath'=>$cache_fpath,
   );
@@ -62,7 +63,7 @@ function load_module($m_name)
 
   $__wicked['modules'][$m_name]['is_loaded'] = true;
   
-  $module_fpath = $config['module_fpath'];
+  $module_fpath = $config['fpath'];
   
   // Configure any class paths
   $class_fpath = $module_fpath."/classes";

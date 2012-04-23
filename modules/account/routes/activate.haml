@@ -8,7 +8,7 @@
   
   if($u)
   {
-    $u->approved = 1;
+    $u->is_activated = 1;
     $u->save();
     flash_next("Thank you. Your account has been activated.");
     

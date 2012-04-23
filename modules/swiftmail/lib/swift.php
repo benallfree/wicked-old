@@ -2,10 +2,11 @@
 
 require_once 'swift/swift_required.php';
 
-function swiftmail($to, $subject=null, $body=null, $send_immediately = false)
+function swiftmail($to, $subject=null, $body=null, $send_immediately = null)
 {
   global $__wicked;
   $config = $__wicked['modules']['swiftmail']['config'];
+  if($send_immediately===null) $send_immediately = $config['send_immediately'];
 
   $data = array(
     'to'=>$to,

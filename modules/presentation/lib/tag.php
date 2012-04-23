@@ -190,7 +190,6 @@ function file_tag($name)
   return "<input $s />";
 }
 
-
 function text_tag($name, $value='')
 {
   $attrs = array(
@@ -202,6 +201,19 @@ function text_tag($name, $value='')
   $s = splice_attrs($attrs, $args,2);
   return "<input $s />";
 }
+
+function password_tag($name, $value='')
+{
+  $attrs = array(
+    'type'=>'password',
+    'name'=>$name,
+    'value'=>$value,
+  );
+  $args = func_get_args();
+  $s = splice_attrs($attrs, $args,2);
+  return "<input $s />";
+}
+
 
 function textarea_tag($name, $value='')
 {
