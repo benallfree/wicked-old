@@ -2,7 +2,7 @@
 
 function attachment_thread_add($at, $params)
 {
- 	$att = Attachment::new_model_instance( array(
+ 	$att = new Attachment( array(
  	  'attributes'=>array(
  	    'attachment_thread_id'=>$at->id,
  	  ),
