@@ -712,21 +712,37 @@ class ActiveRecord
   	}
 
   	// validate uniqueness
-  	$fields = eval("return $klass::\$validates_uniqueness_of;");
-  	foreach($fields as $field)
+  	$field_sets = eval("return $klass::\$validates_uniqueness_of;");
+  	foreach($field_sets as $field_set)
   	{
-    	if (is_object($this->$field)|| is_array($this->$field)) continue;
-    	if (array_key_exists($field, $this->errors)) continue;
-    	
+      $where = array('id <> ?');
+      foreach($field_set as $field_name)
+      {
+        $where[] = "`{$field_name}` = ?";
+      }
+      $s = join(" and ", $where);
+      $where = array($s, $this->id);
+      foreach($field_set as $field_name)
+      {
+        $where[] = $this->$field_name;
+      }
     	$params = array(
-        'conditions'=>array("`$field` = ? and {$this->pk()} <> ?", $this->$field, $this->id())
+        'conditions'=>$where,
       );
     	$c = eval("return $klass::count(\$params);");
     	if ($c>0)
     	{
-  			$this->errors[$field] = ' is already taken';
+        if(count($field_set)>1)
+        {
+          $this->errors[join(':',$field_set)] = ' combo is already taken';
+        } else {
+          foreach($field_set as $field_name)
+          {
+      			$this->errors[$field_name] = ' is already taken';
+      		}
+        }
   		}
-  	}  
+  	}
   	  		
   	
   	$this->is_valid = count($this->errors)==0;

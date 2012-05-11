@@ -327,14 +327,16 @@ class ArCodeGenerator
     $uniques = array();
     foreach($tables as $table_name=>$fields)
     {
-      $uniques[$table_name] = array();
-      foreach($fields as $field_info)
+      $res = query_assoc("show index from `!`", $table_name);
+      $keys = array();
+      foreach($res as $r)
       {
-        if($field_info['Key']=='UNI')
-        {
-          $uniques[$table_name][] = $field_info['Field'];
-        }
+        if($r['Non_unique']) continue;
+        $k = $r['Key_name'];
+        if(!isset($keys[$k])) $keys[$k] = array();
+        $keys[$k][] = $r['Column_name'];
       }
+      $uniques[$table_name] = array_values($keys);
     }
     return $uniques;
   }
