@@ -25,7 +25,7 @@ function submit_tag($text)
   );
   $args = func_get_args();
   $s = splice_attrs($attrs, $args);
-  return "<button $s>".__($text)."</button>";
+  return "<button $s>".se($text)."</button>";
 }
 
 function js_button_tag($text, $onclick)
