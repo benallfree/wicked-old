@@ -1,6 +1,7 @@
 <?
 date_default_timezone_set('UTC');
 error_reporting(E_STRICT | E_ALL);
+ini_set('display_errors', 'On');
 
 if(!file_exists('config.php')) die("Please copy config.template.php to config.php");
 require_once('config.php');
