@@ -83,8 +83,7 @@ class ActiveRecord
   {
     $obj_name = singularize(tableize($this->klass));
     $event_name = "{$obj_name}_{$event_name}";
-    $event_args[$obj_name] = $this;
-    event($event_name, $this);
+    event($event_name, $this, $event_args);
   }
   
   static function _find($klass, $params=array())
