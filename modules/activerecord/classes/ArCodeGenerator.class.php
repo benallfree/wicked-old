@@ -357,8 +357,6 @@ class ArCodeGenerator
   
   function codegen_models()
   {
-    global $codegen;
-    
     $tables = $this->find_tables();
 
     $belongs_to = $this->find_belongs_tos($tables);
@@ -377,8 +375,8 @@ class ArCodeGenerator
   		$s_hmt = s_var_export($has_many_through[$table_name] );
       $s_attribute_types = s_var_export($attribute_types[$table_name]);
       $s_uniques = s_var_export($uniques[$table_name]); 
-    		
-  		$php = "<?\n".eval_php($this->base_fpath."/codegen/class_stub.php", 
+    
+      $php = "<?\n".eval_php($this->base_fpath."/codegen/class_stub.php", 
   		  array(
   		    'klass'=>"{$this->config['class_prefix']}{$klass}",
   		    's_belongs_to'=>$s_belongs_to,

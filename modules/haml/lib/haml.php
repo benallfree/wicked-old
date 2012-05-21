@@ -19,11 +19,12 @@ function eval_haml($path, $data=array(), $capture = false)
 function haml_to_php($src)
 {
   global $__wicked;
-  
+  if(endswith($src, '.php')) return $src;
+    
   $unique_name = folderize(ftov($src));
   $dst = HAML_CACHE_FPATH."/$unique_name.php";
   ensure_writable_folder(dirname($dst));
-  if ($__wicked['modules']['haml']['config']['always_generate'] == false && !is_newer($src, $dst)) return $dst;
+  if ($__wicked['modules']['haml']['always_generate'] == false && !is_newer($src, $dst)) return $dst;
 
   $lex = new HamlLexer();
   $lex->N = 0;

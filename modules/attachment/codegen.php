@@ -1,6 +1,6 @@
 <?
 
-$models = $__wicked['modules']['activerecord']['config']['models'];
+$models = $__wicked['modules']['activerecord']['models'];
 
 $codegen = array();
 foreach($models as $model_name)
@@ -34,14 +34,14 @@ foreach($models as $model_name)
         return codegen_get_attachment_thread(\$s,\$name);
       }
 PHP;
-    $codegen[] = $code;
+    $__wicked['codegen'][] = $code;
   }
 
   $bt_names = array();
   foreach($bt as $bt_name=>$arr)
   {
     list($tn,$fn) = $arr;
-    if ($tn!='attachments') continue;
+    if ($tn!='Attachment') continue;
     $bt_names[] = $bt_name;
   }
   $bt_names_str = s_var_export($bt_names);
@@ -50,25 +50,23 @@ PHP;
   {
     $code = <<<PHP
   
-      observe('{$mn}_after_new', 'attachment_{$mn}_after_new');
-      function attachment_{$mn}_after_new(\$event_args, &\$event_data)
+      observe('{$mn}_after_new', 'attachment', 'attachment_{$mn}_after_new');
+      function attachment_{$mn}_after_new(\$obj, \$event_data)
       {
-        codegen_attachment_after_new(\$event_args, \$event_data, $bt_names_str, '$mn');
+        codegen_attachment_after_new(\$obj, \$event_data, $bt_names_str, '$mn');
       }
 
-      observe('{$mn}_before_validate', 'attachment_{$mn}_before_validate');
-      function attachment_{$mn}_before_validate(\$event_args, &\$event_data)
+      observe('{$mn}_before_validate',  'attachment', 'attachment_{$mn}_before_validate');
+      function attachment_{$mn}_before_validate(\$obj, \$event_data)
       {
-        codegen_attachment_before_validate(\$event_args, \$event_data, $bt_names_str, '$mn');
+        codegen_attachment_before_validate(\$obj, \$event_data, $bt_names_str, '$mn');
       }
 PHP;
     foreach($bt_names as $name)
     {
-      $codegen[] = "{$model_name}::\$attribute_types['$name']['type'] = 'image';";
-      $codegen[] = "{$model_name}::\$eager_load[] = '$name';";
+      $__wicked['codegen'][] = "{$model_name}::\$attribute_types['$name']['type'] = 'image';";
+      $__wicked['codegen'][] = "{$model_name}::\$eager_load[] = '$name';";
     }
-    $codegen[] = $code;
+    $__wicked['codegen'][] = $code;
   }
 }
-
-eval(join("\n",$codegen));

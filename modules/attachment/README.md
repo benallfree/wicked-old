@@ -18,8 +18,6 @@ $customer = Customer::find_by_id(42);
 
 ## Data Storage Location
 
-Considerations for WordPress
-
 ## Attachment Threads
 
 ## Attachments

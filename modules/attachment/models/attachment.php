@@ -4,7 +4,7 @@
 function attachment_save_file($attachment, $arr, $is_committed = true)
 {
   global $__wicked;
-  $config = $__wicked['modules']['attachment']['config'];
+  $config = $__wicked['modules']['attachment'];
   
   $attachment->committed_at =$is_committed ? time() : null;
 	$attachment->original_file_name = $arr['name'];

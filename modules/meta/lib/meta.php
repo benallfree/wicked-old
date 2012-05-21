@@ -10,7 +10,7 @@ function meta_get($o, $name, $default=null)
 function _meta_get_type($o,$name)
 {
   global $__wicked;
-  $cache = &$__wicked['modules']['meta']['config']['type_cache'];
+  $cache = &$__wicked['modules']['meta']['type_cache'];
   $class = get_class($o);
   if(!isset($cache[$class])) $cache[$class] = array();
   if(isset($cache[$class][$name])) return $cache[$class][$name];
@@ -29,7 +29,7 @@ function _meta_get_type($o,$name)
   if($type->autoload)
   {
     $all_metas = $type->meta_values;
-    $value_cache = &$__wicked['modules']['meta']['config']['value_cache'];
+    $value_cache = &$__wicked['modules']['meta']['value_cache'];
     $value_cache[$type->id] = array();
     foreach($all_metas as $m)
     {
@@ -42,7 +42,7 @@ function _meta_get_type($o,$name)
 function _meta_get_value($o, $type, $default)
 {
   global $__wicked;
-  $cache = &$__wicked['modules']['meta']['config']['value_cache'];
+  $cache = &$__wicked['modules']['meta']['value_cache'];
   $class = get_class($o);
   if(!isset($cache[$type->id])) $cache[$type->id] = array();
   if(isset($cache[$type->id][$o->id])) return $cache[$type->id][$o->id];

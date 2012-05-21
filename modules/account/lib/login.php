@@ -8,7 +8,7 @@ function is_logged_in()
 function login($user, $location=null)
 {
   global $__wicked;
-  $config = $__wicked['modules']['account']['config'];
+  $config = $__wicked['modules']['account'];
   
   // this sets variables in the session 
   $_SESSION['user_id']= $user->id;  

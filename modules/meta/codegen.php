@@ -1,13 +1,12 @@
 <?
 
-$ar_config = $__wicked['modules']['activerecord']['config'];
+$ar_config = $__wicked['modules']['activerecord'];
 
-$codegen = array();
 foreach($ar_config['models'] as $class)
 {
   if($class=='Meta') continue;
   $n = singularize(tableize($class));
-  $codegen[] = "
+  $__wicked['codegen'][] = "
     function {$n}_meta(\$o, \$name, \$default=null)
     {
       return meta_get(\$o, \$name, \$default);
@@ -18,5 +17,3 @@ foreach($ar_config['models'] as $class)
     }
   ";
 }
-$codegen = join("\n",$codegen);
-eval($codegen);

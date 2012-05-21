@@ -1,0 +1,434 @@
+  body
+  {
+    font: 13px/1.6 "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+    background-color: white;
+    margin: 0px;
+    font-size: 10pt;
+  }
+  
+  a
+  {
+    text-decoration: none;
+    color: blue;
+    cursor:pointer;
+  }
+  a:visited
+  {
+    color: blue;
+  }
+  a:hover
+  {
+    text-decoration: underline;
+  }
+  table {
+    font: 13px/1.6 "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+    background-color: white;
+    font-size: 10pt;
+    text-align: left;
+  }
+  td, th
+  {
+    vertical-align: top;
+    padding: 3px;
+  }
+  .nav
+  {
+    width: 944px;
+    height: 65px;
+    background-color: white;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-right: 10px;
+    border-bottom: 10px solid black;
+  }
+  
+  .nav .title a {
+    text-decoration: none;
+    font-family: 'Muli', sans-serif;
+    color: black;
+    border: 0;
+    font-size: 19px;
+    line-height: 37px;
+    float: left;
+  }
+  
+  .nav .title a:visited {
+    color: black;
+  }
+  .nav .menu {
+    float: right;
+    margin-top: 5px;
+  }
+  .nav .menu ul
+  {
+    text-align: right;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .nav .menu ul li
+  {
+    float: left;
+    padding: 3px;
+    margin-left: 15px;
+    font-size: 25pt;
+  }
+  .nav .menu ul li:hover
+  {
+  }
+  .nav .menu ul li a
+  {
+    color: black;
+    text-decoration: none;
+  }
+  .nav .menu ul li a:hover
+  {
+    color: #2E2F48;
+    text-decoration: none;
+  }
+  .menu ul li a:visited
+  {
+    color: black;
+    text-decoration: none;
+  }  
+  
+  .item
+  {
+    -moz-box-shadow: 0 1px 3px #8493a6;
+    -webkit-box-shadow: 0 1px 3px #8493a6;
+    box-shadow: 0 1px 3px #8493a6;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    width: 90px;
+    height: 100px;
+    float: left;
+    margin: 10px;
+    text-align: center;
+  }
+  .item img
+  {
+    max-width: 70px;
+    max-height: 70px;
+  }
+  .item .header
+  {
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+    text-align: center;
+    border-bottom: 1px solid #888;
+  }
+  .item .required
+  {
+    background-color: orange;
+  }
+  .item .optional
+  {
+    background-color: #EBF7FA;
+  }
+  .item .picture
+  {
+    margin-top: 20px;
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .item .caption
+  {
+    clear: both;
+    font-size: 12pt;
+    text-align: center;
+  }
+  
+  .content
+  {
+    width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -moz-box-shadow: 0 1px 3px #8493a6;
+    -webkit-box-shadow: 0 1px 3px #8493a6;
+    box-shadow: 0 1px 3px #8493a6;
+  }
+  img
+  {
+    margin: 3px;
+  }
+  
+  
+  .footer
+  {
+    margin-top: 10px;
+    
+    text-align: right;
+    margin-left: auto;
+    margin-right: auto;
+    width: 954px;
+    color: #888
+  }
+  .footer ul
+  {
+    text-align: right;
+    float: right;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    
+  }
+  
+  .footer ul li
+  {
+    float: left;
+    padding: 3px;
+    margin-left: 15px;
+    font-size: 10pt;
+  }
+  .footer ul li:hover
+  {
+  }
+  .footer ul li a
+  {
+    color: #888;
+    text-decoration: none;
+  }
+  .footer ul li a:hover
+  {
+    color: #888;
+    text-decoration: none;
+  }
+  .footer ul li a:visited
+  {
+    color: #888;
+    text-decoration: none;
+  }  
+  p
+  {
+    clear: both;
+  }
+  
+  table.equipment th, table.equipment td
+  {
+    border-top: 1px solid #aaa;
+  }
+  
+  table.equipment th
+  {
+    width: 200px;
+  }
+  table.equipment td
+  {
+    width: 400px;
+  }  
+  
+  .equipment .title
+  {
+    font-weight: bold;
+    font-size: 10pt;
+    cursor:pointer;
+    clear: both;
+    color: blue;
+  }
+  .equipment .title:hover
+  {
+    text-decoration: underline;
+  }
+  .equipment .body
+  {
+    display: none;
+    clear: both;
+    margin: 10px;
+  }
+  
+  .flash, .msg {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border: 1px solid #DAC2AF;
+    background: #FAFCD9;
+    padding: 5px;
+  }
+
+  .error, .msg {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border: 1px solid red;
+    background: #Fcc;
+    padding: 5px;
+  }
+  
+  .nav .submenu {
+    float: right;
+    margin-top: 11px;
+  }
+  .nav .submenu ul
+  {
+    text-align: right;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .nav .submenu ul li
+  {
+    float: left;
+    padding: 3px;
+    font-size: 10pt;
+    background-color: #9A9999;
+    margin-left: 1px;
+    -moz-border-radius-bottomleft: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    
+  }
+
+  .nav .submenu ul li:hover
+  {
+    background-color: #CECBCB;
+  }
+  .nav .submenu ul li a
+  {
+    color: black;
+    text-decoration: none;
+  }
+  .nav .submenu ul li a:hover
+  {
+    color: black;
+    text-decoration: none;
+  }
+  .submenu ul li a:visited
+  {
+    color: black;
+    text-decoration: none;
+  }  
+  
+  .widget
+  {
+    float: right;
+    margin: 10px;
+  }
+  
+  .widget a
+  {
+    text-decoration: underline;
+  }
+  
+  .box
+  {
+    -moz-box-shadow: 0 1px 3px #8493a6;
+    -webkit-box-shadow: 0 1px 3px #8493a6;
+    box-shadow: 0 1px 3px #8493a6;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+  }
+  
+  .button
+  {
+    -moz-box-shadow: 0 1px 3px #8493a6;
+    -webkit-box-shadow: 0 1px 3px #8493a6;
+    box-shadow: 0 1px 3px #8493a6;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    padding: 5px;
+    text-align: center;
+    background-color: #FF8F3B;
+    color: white;
+    width: 100px;
+  }
+  
+  .button:hover
+  {
+    background-color: #FFaF5B;
+    color: white;
+    cursor:pointer;
+  
+  }
+  
+  .button.large
+  {
+    width: 200px;
+  }
+  
+  .button.loading
+  {
+    background-color: #ccc;
+    color: #888;
+  }
+  
+  
+  .box.callout
+  {
+    width: 300px;
+    float: left;
+    margin: 10px;
+  }
+
+  .box.callout.wide
+  {
+    width: 600px;
+  }
+  
+  .box.callout .title
+  {
+    background-color: #1846A4;
+    color: white;
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    -moz-border-radius-topright: 6px;
+    padding: 5px;
+  }
+  .box.callout .body
+  {
+    padding: 10px;
+  }
+
+
+  .clear
+  {
+    clear: both;
+  }
+  
+  .hidden
+  {
+    display:none;
+  }
+  .nav .title
+  {
+    font-weight: normal;
+  }
+  
+  form
+  {
+  }
+  
+  fieldset 
+  {
+    border: none;
+  }
+  
+  input[type=text]
+  {
+    width: 400px;
+  }
+  textarea
+  {
+    width: 400px;
+    height: 250px;
+  }
+  
+  input.search
+  {
+    width: 200px;
+  }

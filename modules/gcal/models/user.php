@@ -17,7 +17,7 @@ function user_get_calendars($u)
 function user_get_gcal_client__d($u)
 {
   global $__wicked;
-  $config = $__wicked['modules']['gcal']['config'];
+  $config = $__wicked['modules']['gcal'];
   
   $client = new apiClient();
   $client->setApplicationName($__wicked['app_title']);

@@ -5,7 +5,7 @@ function ensure_extension_loaded($f, $tableized_class)
   global $__wicked;
   foreach($__wicked['modules'] as $module_name=>$module)
   {
-    $model_fpath = $module['config']['fpath']."/models";
+    $model_fpath = $module['fpath']."/models";
     $extension_fpath = $model_fpath."/{$tableized_class}.php";
     if(!file_exists($extension_fpath)) continue;
     load_module($module_name);

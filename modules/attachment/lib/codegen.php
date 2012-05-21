@@ -1,25 +1,24 @@
 <?
 
-function codegen_attachment_before_validate($event_args, $event_data, $bt_names, $model_name)
+function codegen_attachment_before_validate($obj, $event_data, $bt_names, $model_name)
 {
   foreach($bt_names as $bt_name)
   {
-    $o = $event_args[$model_name];
     $data = "{$bt_name}_data";
-    if (is_file_upload($o->$data))
+    if (is_file_upload($obj->$data))
     {
-      associate_attachment($o, $bt_name);
+      associate_attachment($obj, $bt_name);
     }
   }
 }
 
 
-function codegen_attachment_after_new($event_args, $event_data, $bt_names, $model_name)
+function codegen_attachment_after_new($obj, $event_data, $bt_names, $model_name)
 {
   foreach($bt_names as $bt_name)
   {
     $data = "{$bt_name}_data";
-    $event_args[$model_name]->$data = null;
+    $obj->$data = null;
   }
 }
 
