@@ -8,7 +8,7 @@ define('SALT_LENGTH', 9); // salt for password
 
 
 $config = array(
-  'requires'=>array('swiftmail', 'eval_php', 'db', 'activerecord', 'observer', 'meta', 'template'),
+  'requires'=>array('swiftmail', 'eval_php', 'db', 'activerecord', 'observer', 'meta', 'template', 'string'),
   'after_activation_url'=>'/',
   'after_login_url'=>'/',
   'recaptcha'=>array(

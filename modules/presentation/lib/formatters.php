@@ -43,7 +43,7 @@ function splice_date($parts)
 
 function simple_format($s, $hyperlink=true)
 {
-  $s = htmlentities($s);
+  $s = h($s);
   $s = preg_replace("/\n/", "<br/>", $s);
   $s = preg_replace("/\s\s/", " &nbsp;", $s);
   $s = preg_replace("/\t/", " &nbsp;", $s);
@@ -109,7 +109,7 @@ function to_xml_attributes($attrs)
   $s = array();
   foreach($attrs as $k=>$v)
   {
-    $v = htmlentities($v);
+    $v = h($v);
     $s[] = "$k = \"$v\"";
   }
   $s = join($s,' ');

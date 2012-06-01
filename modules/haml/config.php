@@ -1,6 +1,6 @@
 <?
 
 $config = array(
-  'requires'=>array('sass'),
+  'requires'=>array('sass', 'string'),
   'always_generate'=>false,
 );

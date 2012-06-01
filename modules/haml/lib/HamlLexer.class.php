@@ -299,7 +299,7 @@ class HamlLexer {
   function handle_attribute_assign($matches)
   {
     $name = array_shift($matches);
-    echo " $name=\"<?= htmlentities(";
+    echo " $name=\"<?= h(";
     $this->yybegin(self::ATTRIBUTE_VALUE_TOKEN);
     $this->attribute_value_expecting = array('php');
   }
@@ -554,7 +554,7 @@ class HamlLexer {
       if ($use_echo)
       {
         echo "<?= ";
-        if ($this->php_wrap) echo "htmlentities(";
+        if ($this->php_wrap) echo "h(";
       } else {
         echo "<? ";
       }

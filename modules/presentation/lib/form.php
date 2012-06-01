@@ -7,7 +7,7 @@ $form_multi=0;
 function form_for($obj, $action=null, $params="", $display_error_summary=true)
 {
   global $form_objs,$name_stack, $full_request_path;
-  if (!$action) $action = $full_request_path;
+  if (!$action) $action = '/'.$full_request_path;
   $form_objs[] = $obj;
   $name_stack[] = singularize(tableize(get_class($obj)));
 
@@ -32,7 +32,11 @@ function end_form_for()
 function form_tag($action='', $params=null)
 {
   $action = h($action);
-  return "<form method=\"post\" enctype=\"multipart/form-data\" action=\"$action\" $params><fieldset>";
+  return <<<FORM
+    <form method="post" enctype="multipart/form-data" action="$action" $params>
+     <input type="hidden" name="charset_check" value="ä™®">
+    <fieldset>
+FORM;
 }
 
 function end_form_tag()

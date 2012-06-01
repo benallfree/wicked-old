@@ -1,6 +1,6 @@
 <?
 function filter($data) {
-	$data = trim(htmlentities(strip_tags($data)));
+	$data = trim(h(strip_tags($data)));
 
 	if (get_magic_quotes_gpc())
 		$data = stripslashes($data);

@@ -25,7 +25,7 @@ function submit_tag($text)
   );
   $args = func_get_args();
   $s = splice_attrs($attrs, $args);
-  return "<button $s>".__($text)."</button>";
+  return "<button $s>".$text."</button>";
 }
 
 function js_button_tag($text, $onclick)
@@ -211,6 +211,6 @@ function textarea_tag($name, $value='')
   );
   $args = func_get_args();
   $s = splice_attrs($attrs, $args,2);
-  $value = htmlentities($value);
+  $value = h($value);
   return "<textarea $s>$value</textarea>";
 }

@@ -5,7 +5,9 @@ observe('meta_unserialize', 'meta_unserialize');
 
 function meta_serialize($m)
 {
-  $m->value = json_encode($m->value);
+  $v = json_encode(deep_utf8_encode($m->value));
+  if($v===false) wicked_error(json_last_error());
+  $m->value = $v;
 }
 
 function meta_unserialize($m)

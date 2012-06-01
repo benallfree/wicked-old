@@ -1,7 +1,8 @@
 <?
 
-function link_to($text, $path)
+function link_to($text, $path=null)
 {
+  if(!$path) $path = $text;
   $attrs = array(
     'href'=>$path
   );

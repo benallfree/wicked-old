@@ -1,7 +1,7 @@
 php_value date.timezone UTC
 php_value memory_limit 200M
 
-AddHandler php5-script .php
+AddHandler php-legacy .php
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>

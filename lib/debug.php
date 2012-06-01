@@ -7,7 +7,7 @@ function dprint($s,$shouldExit=true)
   var_dump($s);
   $out = ob_get_contents();
   ob_end_clean();
-  echo htmlentities($out);
+  echo htmlentities($out,ENT_COMPAT,'UTF-8');
   echo "</pre>";
   if ($shouldExit) wicked_error('Development stop');
 }

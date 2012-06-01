@@ -77,7 +77,7 @@ function textarea_field()
   if ($obj->errors && array_key_exists($field, $obj->errors) && $obj->errors[$field]!='') $attrs['class'] = 'error_field';
   $args = func_get_args();
   $s = splice_attrs($attrs, $args);
-  $value = htmlentities($value);
+  $value = h($value);
   return "<textarea $s>$value</textarea>";
 }
 

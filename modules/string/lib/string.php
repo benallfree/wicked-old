@@ -67,7 +67,7 @@ function u($s)
 
 function h($s)
 {
-  return htmlentities($s);
+  return htmlentities($s, ENT_COMPAT, 'UTF-8');
 }
 
 function j($s, $quote=false)

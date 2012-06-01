@@ -582,6 +582,8 @@ class ActiveRecord
       case 'date':
         if(!is_numeric($this->$k))
         {
+          $old = date_default_timezone_get();
+          date_default_timezone_set('UTC');
           $this->$k = str_replace('/', '-', $this->$k);
           if(method_exists('DateTime', 'createFromFormat'))
           {
@@ -599,12 +601,10 @@ class ActiveRecord
               }
             }
           } else {
-            $old = date_default_timezone_get();
-            date_default_timezone_set('UTC');
             $v = strtotime( $this->$k );
-            date_default_timezone_set($old);
             $this->$k = $v;
           }
+          date_default_timezone_set($old);
         }
         break;
       case 'smallint':

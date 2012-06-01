@@ -261,12 +261,22 @@
     padding: 5px;
   }
 
-  .error, .msg {
+  label.error
+  {
+    color: red;
+  }
+  
+  input.error
+  {
+    background-color: #Fcc;
+  }
+  .msg {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border: 1px solid red;
     background: #Fcc;
     padding: 5px;
+    margin: 5px;
   }
   
   .nav .submenu {

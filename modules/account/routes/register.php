@@ -106,7 +106,11 @@ if(p('doRegister')== 'Register')
         return this.optional(element) || /^[a-z0-9\_]+$/i.test(value);
     }, "Username must contain only letters, numbers, or underscore.");
 
-    $("#regForm").validate();
+    $("#regForm").validate(
+      {
+        wrapper: 'div',
+      }
+    );
   });
   </script>
 <table width="100%" border="0" cellspacing="0" cellpadding="5" class="main">
@@ -169,7 +173,8 @@ if(p('doRegister')== 'Register')
                   });
                 });
               </script>
-			    <span style="color:red; font: bold 12px verdana; " id="checkid" ></span> 
+			         <br/>
+			         <span style="color:red; font: bold 12px verdana; " id="checkid" ></span> 
             </td>
           </tr>
           <tr> 
