@@ -3,13 +3,15 @@
 function eval_haml($path, $data=array(), $capture = false)
 {
 
-  if(!file_exists($path)) wax_error("File $path does not exist for HAMLfication.");
+  if(!file_exists($path)) wicked_error("File $path does not exist for HAMLfication.");
   $unique_name = folderize(ftov($path));
-  $php_path = WAX_HAML_CACHE_FPATH."/$unique_name.php";
+  $php_path = HAML_CACHE_FPATH."/$unique_name.php";
   if (is_newer($path, $php_path))
   {
     haml_to_php($path, $php_path);
   }
+  if(!file_exists($php_path)) dprint('wtf');
+
   return eval_php($php_path,$data,$capture);
 }
 
@@ -17,11 +19,12 @@ function eval_haml($path, $data=array(), $capture = false)
 function haml_to_php($src)
 {
   global $__wicked;
-  
-  $unique_name = folderize($src);
+  if(endswith($src, '.php')) return $src;
+    
+  $unique_name = folderize(ftov($src));
   $dst = HAML_CACHE_FPATH."/$unique_name.php";
   ensure_writable_folder(dirname($dst));
-  if ($__wicked['modules']['haml']['config']['always_generate'] == false && !is_newer($src, $dst)) return $dst;
+  if ($__wicked['modules']['haml']['always_generate'] == false && !is_newer($src, $dst)) return $dst;
 
   $lex = new HamlLexer();
   $lex->N = 0;

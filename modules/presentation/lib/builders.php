@@ -1,13 +1,14 @@
 <?
 
-function link_to($text, $path=null)
+function link_to($text, $path=null, $qs = array())
 {
   if(!$path) $path = $text;
+  $qs = count($qs)>0 ? '?'.http_build_query($qs) : '';
   $attrs = array(
-    'href'=>$path
+    'href'=>$path.$qs
   );
   $args = func_get_args();
-  $s = splice_attrs($attrs, $args,2);
+  $s = splice_attrs($attrs, $args,3);
   $text = h($text);
 	return "<a $s >$text</a>";
 }

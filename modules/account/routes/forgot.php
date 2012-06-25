@@ -11,7 +11,7 @@ if (p('doReset')=='Reset')
     $err[] = "ERROR - Please enter a valid email"; 
   }
   
-  $user = User::find_by_email(p('user_email'));
+  $user = event('find_login', null, p('user_email'));
   
   if ( !$user ) { 
     $err[] = "Error - Sorry no such account exists or registered.";
@@ -22,7 +22,8 @@ if (p('doReset')=='Reset')
     
     $host  = $_SERVER['HTTP_HOST'];
     $path   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-    $reset_link = "http://$host$path/account/reset?user={$user->md5_id}&activ_code=$activ_code";
+    $reset_link = create_secure_callback_url('reset_user', $user->id);
+    $reset_link = "http://{$host}{$path}{$reset_link}";
 
     list($subject,$body) = template('account.forgot', array('reset_link'=>$reset_link));
     swiftmail($user->email, $subject, $body);

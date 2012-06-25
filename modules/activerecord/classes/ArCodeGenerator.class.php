@@ -184,10 +184,10 @@ class ArCodeGenerator
   		{
   			foreach($hm_fields as $data)
   			{
+  		    if($data['Comment']=='-') continue; // force skip
   				$field_name = $data['Field'];
-   			  if ($data['Comment']!='') $field_name = strtolower($data['Comment']) .'_id';
-  				if ($field_name != $stn.'_id') continue;
-  				
+   			  if ($data['Comment']!='') $field_name = strtolower(singularize(tableize($data['Comment']))) .'_id';
+  				if ($field_name != $stn.'_id') continue; // skip if it's not referring back to the master table
   			  if (isset($hm_duplicates[$hm_table_name]))
   			  {
   			    if($hm_duplicates[$hm_table_name]===false) // duplicate found, but no fixup yet
@@ -327,14 +327,16 @@ class ArCodeGenerator
     $uniques = array();
     foreach($tables as $table_name=>$fields)
     {
-      $uniques[$table_name] = array();
-      foreach($fields as $field_info)
+      $res = query_assoc("show index from `!`", $table_name);
+      $keys = array();
+      foreach($res as $r)
       {
-        if($field_info['Key']=='UNI')
-        {
-          $uniques[$table_name][] = $field_info['Field'];
-        }
+        if($r['Non_unique']) continue;
+        $k = $r['Key_name'];
+        if(!isset($keys[$k])) $keys[$k] = array();
+        $keys[$k][] = $r['Column_name'];
       }
+      $uniques[$table_name] = array_values($keys);
     }
     return $uniques;
   }
@@ -355,8 +357,6 @@ class ArCodeGenerator
   
   function codegen_models()
   {
-    global $codegen;
-    
     $tables = $this->find_tables();
 
     $belongs_to = $this->find_belongs_tos($tables);
@@ -375,8 +375,8 @@ class ArCodeGenerator
   		$s_hmt = s_var_export($has_many_through[$table_name] );
       $s_attribute_types = s_var_export($attribute_types[$table_name]);
       $s_uniques = s_var_export($uniques[$table_name]); 
-    		
-  		$php = "<?\n".eval_php($this->base_fpath."/codegen/class_stub.php", 
+    
+      $php = "<?\n".eval_php($this->base_fpath."/codegen/class_stub.php", 
   		  array(
   		    'klass'=>"{$this->config['class_prefix']}{$klass}",
   		    's_belongs_to'=>$s_belongs_to,

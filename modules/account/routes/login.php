@@ -17,20 +17,19 @@ if (p('doLogin')=='Login')
   $user_email = $data['usr_email'];
   $pass = $data['pwd'];
   
-  $user = User::find( array(
-    'conditions'=>array('email = ? or login = ?', $user_email, $user_email),
-  ));
+  $user = event('find_login', null, $user_email);
 
   // Match row found with more than 1 results  - the user is authenticated. 
   if ( $user ) 
   { 
-  	if(!$user->approved) 
+  	if(!$user->is_activated) 
   	{
   	 $s = "Account not activated. Please check your email for activation code. ";
   	 $s .= "<a href='{$user->activation_check_url}'>Resend</a>";
     	$err[] = $s;
     } else {
-      if ($user->pwd === PwdHash($pass,substr($user->pwd,0,9))) { 
+      if ($user->password === PwdHash($pass,$user->salt))
+      { 
         login($user, p('r',$config['after_login_url']));
       } else {
       	$err[] = "Invalid Login. Please try again with correct user email and password.";
@@ -99,8 +98,11 @@ if (p('doLogin')=='Login')
                 <p> 
                   <input name="doLogin" type="submit" id="doLogin3" value="Login">
                 </p>
-                <p><a href="register">Register Free</a><font color="#FF6600"> 
-                  |</font> <a href="forgot">Forgot Password</a> <font color="#FF6600"> 
+                <p>
+                  <? if($config['should_allow_open_registration']): ?>
+                  <a href="register">Register Free</a><font color="#FF6600"> | </font> 
+                  <? endif; ?>
+                  <a href="forgot">Forgot Password</a> <font color="#FF6600"> 
                   </font></p>
               </div></td>
           </tr>

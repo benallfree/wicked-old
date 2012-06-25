@@ -89,7 +89,7 @@ function wicked_date_format($timestamp, $include_time=false)
 {
   if (!$timestamp) return null;
   global $__wicked;
-  $config = $__wicked['modules']['date']['config'];
+  $config = $__wicked['modules']['date'];
   $s = $config['date_format'];
   if($include_time) $s .= " @ {$config['time_format']}";
   return date($s, $timestamp);
@@ -99,7 +99,7 @@ function wicked_time_format($timestamp, $include_date = false)
 {
   if (!$timestamp) return null;
   global $__wicked;
-  $config = $__wicked['modules']['date']['config'];
+  $config = $__wicked['modules']['date'];
   $s = $config['time_format'];
   if($include_date) $s = "{$config['date_format']} @ " . $s;
   return date($s, $timestamp);

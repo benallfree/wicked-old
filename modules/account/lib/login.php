@@ -8,12 +8,11 @@ function is_logged_in()
 function login($user, $location=null)
 {
   global $__wicked;
-  $config = $__wicked['modules']['account']['config'];
+  $config = $__wicked['modules']['account'];
   
   // this sets variables in the session 
   $_SESSION['user_id']= $user->id;  
   $_SESSION['user_name'] = $user->login;
-  $_SESSION['user_level'] = $user->access_level;
   $_SESSION['HTTP_USER_AGENT'] = md5($_SERVER['HTTP_USER_AGENT']);
 
   //update the timestamp and key for cookie
@@ -47,13 +46,8 @@ function login($user, $location=null)
 
 function logout()
 {
-  global $db;
-  if(isset($_SESSION['user_id']) || isset($_COOKIE['user_id'])) {
-  mysql_query("update `users` 
-  			set `ckey`= '', `ctime`= '' 
-  			where `id`='$_SESSION[user_id]' OR  `id` = '$_COOKIE[user_id]'") or die(mysql_error());
-  }			
-  
+  if(!is_logged_in()) return;
+
   /************ Delete the sessions****************/
   unset($_SESSION['user_id']);
   unset($_SESSION['user_name']);

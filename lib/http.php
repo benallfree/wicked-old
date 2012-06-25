@@ -6,11 +6,11 @@ function is_postback($param=null)
 }
 
 
-function redirect_to($location)
+function redirect_to($location, $args=array())
 {
+  $location .= "?".http_build_query($args);
   header('Location: ' . $location);
   header('Status: 302');
-  dprint($location);
   die;
 }
 

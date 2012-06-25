@@ -120,13 +120,7 @@ function GenKey($length = 7)
 // Password and salt generation
 function PwdHash($pwd, $salt = null)
 {
-    if ($salt === null)     {
-        $salt = substr(md5(uniqid(rand(), true)), 0, SALT_LENGTH);
-    }
-    else     {
-        $salt = substr($salt, 0, SALT_LENGTH);
-    }
-    return $salt . sha1($pwd . $salt);
+    return sha1($pwd . $salt);
 }
 
 function checkAdmin() {
@@ -136,5 +130,17 @@ function checkAdmin() {
   } else { return 0 ;
   }
 
+}
+
+function reset_user($id)
+{
+  $user = User::find_by_id($id);
+
+  if ( !$user ) { 
+  	flash_next("Sorry no such account exists or reset code is invalid.");
+  	redirect_to('/');
+  } else {
+    login($user, '/account');
+  }
 }
 

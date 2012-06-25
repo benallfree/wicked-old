@@ -1,28 +1,24 @@
 <?
 
-function preload_module($module_fpath)
+
+function load_config($module_fpath)
 {
-  global $__wicked;
-  
   $m_name = basename($module_fpath);
   
-  if(isset($__wicked['modules'][$m_name])) return;
- 
-  if(!file_exists($module_fpath)) wicked_error("Module $m_name not found. Did you misspell it?");
-
-  define(strtoupper($m_name).'_FPATH', $module_fpath);
   $cache_fpath = CACHE_FPATH."/{$m_name}";
-  define(strtoupper($m_name).'_CACHE_FPATH', $cache_fpath);
-
   ensure_writable_folder($cache_fpath);
   
   // Load the default config file
   $default_config = array(
+    'name'=>$m_name,
     'requires'=>array(),
     'default_route'=>'index',
-    'module_fpath'=>$module_fpath,
+    'fpath'=>$module_fpath,
+    'vpath'=>substr($module_fpath,strlen(ROOT_FPATH)),
     'always_load'=>false,
     'cache_fpath'=>$cache_fpath,
+    'is_loaded'=>false,
+    'observes'=>array(),
   );
   $config = array();
   $config_fname = $module_fpath."/config.php";
@@ -40,37 +36,42 @@ function preload_module($module_fpath)
     require($config_fname);
     $config = array_merge($current_config, $config);
   }
-  $__wicked['modules'][$m_name] = array('config'=>$config, 'is_loaded'=>false);
   
-  // Process the preloader
-  $preload_fpath = $module_fpath."/preload.php";
-  if(file_exists($preload_fpath))
+  return $config;
+}
+
+
+function preload_module($module_fpath)
+{
+  global $__wicked;
+  $m_name = basename($module_fpath);
+  if(isset($__wicked['modules'][$m_name])) return;
+  $config = load_config($module_fpath);
+  foreach($config['requires'] as $r_name)
   {
-    require_once($preload_fpath);
+    if(!isset($__wicked['module_fpaths'][$r_name])) wicked_error("$m_name requires $r_name, but $r_name does not exist.");
+    $r_fpath = $__wicked['module_fpaths'][$r_name];
+    preload_module($r_fpath);
   }
+  $__wicked['modules'][$m_name] = $config;
+  
+  return;
 }
 
 function load_module($m_name)
 {
   global $__wicked;
-  
-  if(!isset($__wicked['modules'][$m_name]['config'])) return null;
+ 
+  if(!isset($__wicked['modules'][$m_name])) wicked_error("Attempted to load undefined module $m_name.");
 
-  $config = &$__wicked['modules'][$m_name]['config'];
+  $config = &$__wicked['modules'][$m_name];
   
   if($__wicked['modules'][$m_name]['is_loaded']) return $config;
 
   $__wicked['modules'][$m_name]['is_loaded'] = true;
   
-  $module_fpath = $config['module_fpath'];
+  $module_fpath = $config['fpath'];
   
-  // Configure any class paths
-  $class_fpath = $module_fpath."/classes";
-  if(file_exists($class_fpath))
-  {
-    $__wicked['autoload_fpaths'][] = $class_fpath;
-  }
-
   // Load required modules
   foreach($config['requires'] as $r)
   {
@@ -90,13 +91,13 @@ function load_module($m_name)
     require($bootstrap_fname);
   }
 
+
   // Perform codegen
-  $bootstrap_fname = $module_fpath."/codegen.php";
-  if(file_exists($bootstrap_fname))
+  if(IS_CLI)
   {
-    lock($config['cache_fpath']);
-    require($bootstrap_fname);
-    unlock($config['cache_fpath']);
+    $codegen_fname = $module_fpath."/codegen.php";
+    if(!file_exists($codegen_fname)) return $config;
+    require($codegen_fname);
   }
   
   return $config;

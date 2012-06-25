@@ -4,18 +4,18 @@ $config = array(
   /*
   The default route and module to execute if one is not specified.
   */
+  'default_module'=>'home',
   'default_route'=>'index',
-  'default_module'=>'pages',
   
   /*
   Which theme to use by default
   */
-  'theme'=>'wicked',
+  'theme'=>'swatfame',
   
   /*
   The app title appearing in the page and browser window.
   */
-  'app_title'=>'Lowflow',
+  'app_title'=>'SwatFame',
 );
 
 /*

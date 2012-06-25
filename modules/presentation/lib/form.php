@@ -6,8 +6,9 @@ $form_multi=0;
 
 function form_for($obj, $action=null, $params="", $display_error_summary=true)
 {
-  global $form_objs,$name_stack, $full_request_path;
-  if (!$action) $action = '/'.$full_request_path;
+  global $__wicked;
+  global $form_objs,$name_stack;
+  if (!$action) $action = $__wicked['request']['request_path'];
   $form_objs[] = $obj;
   $name_stack[] = singularize(tableize(get_class($obj)));
 

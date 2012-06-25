@@ -26,6 +26,21 @@ function observe($event_name, $callback, $weight=10)
   usort($event, 'observer_event_sort');
 }
 
+function remove_observer($event_name, $callback)
+{
+  global $__wicked;
+  $events = &$__wicked['modules']['observer']['config']['events'];
+  if(!isset($events[$event_name])) $events[$event_name] = array();
+  $event = &$events[$event_name];
+  for($i=0;$i<count($event);$i++)
+  {
+    if($event[$i][0]!=$callback) continue;
+    unset($event[$i]);
+    break;
+  }
+  usort($event, 'observer_event_sort');
+}
+
 function observer_event_sort($a,$b)
 {
   if($a[1]>$b[1]) return -1;

@@ -21,8 +21,8 @@ function page_protect($flash='Please log in.',$redirect = null) {
   {
   	if(isset($_COOKIE['user_id']) && isset($_COOKIE['user_key'])){
   	/* we double check cookie expiry time against stored in database */
-  	
-  	$cookie_user_id  = filter($_COOKIE['user_id']);
+
+  	$cookie_user_id  = account_filter($_COOKIE['user_id']);
   	$rs_ctime = mysql_query("select `ckey`,`ctime` from `users` where `id` ='$cookie_user_id'") or die(mysql_error());
   	list($ckey,$ctime) = mysql_fetch_row($rs_ctime);
   	// coookie expiry

@@ -2,13 +2,18 @@
 
 function dprint($s,$shouldExit=true)
 {
-  echo "<pre>";
+  if(!IS_CLI) echo "<pre>";
   ob_start();
   var_dump($s);
   $out = ob_get_contents();
   ob_end_clean();
-  echo htmlentities($out,ENT_COMPAT,'UTF-8');
-  echo "</pre>";
+  if(IS_CLI)
+  {
+    echo $out;
+  } else {
+    echo htmlentities($out,ENT_COMPAT,'UTF-8');
+  }
+  if(!IS_CLI) echo "</pre>";
   if ($shouldExit) wicked_error('Development stop');
 }
 
@@ -17,29 +22,55 @@ function wicked_error($err, $data=null)
 {
   if ($data)
   {
-    $err = $err."<br/><pre>".htmlentities(s_var_export($data))."</pre>";
+    if(IS_CLI)
+    {
+      $err .= s_var_export($data);
+    } else {
+      $err = $err."<br/><pre>".htmlentities(s_var_export($data))."</pre>";
+    }
   }
-  echo( "\"><table>");
-  echo ("<tr>");
-  echo("<td>");
-  echo($err);
-  echo("</td>");
-  echo("</tr>");
+  if(!IS_CLI)
+  {
+    echo( "\"><table>");
+    echo ("<tr>");
+    echo("<td>");
+    echo($err);
+    echo("</td>");
+    echo("</tr>");
+  }
   foreach(debug_backtrace() as $trace)
   {
-    echo( "<tr>");
-    echo( "<td>");
+    if(!IS_CLI)
+    {
+      echo( "<tr>");
+      echo( "<td>");
+    }
     if (array_key_exists('file', $trace)) echo( htmlentities($trace['file']));
-    echo( "</td>");
-    echo( "<td>");
+    if(!IS_CLI)
+    {
+      echo( "</td>");
+      echo( "<td>");
+    } else {
+      echo "\t";
+    }
     if (array_key_exists('line', $trace)) echo( htmlentities($trace['line']));
-    echo( "</td>");
-    echo( "<td>");
+    if(!IS_CLI)
+    {
+      echo( "</td>");
+      echo( "<td>");
+    } else {
+      echo "\t";
+    }
     if (array_key_exists('function', $trace)) echo( htmlentities($trace['function']));
-    echo( "</td>");
-    echo( "</tr>");
+    if(!IS_CLI)
+    {
+      echo( "</td>");
+      echo( "</tr>");
+    } else {
+      echo "\n";
+    }
   }
-  echo( "</table>");
+  if(!IS_CLI) echo( "</table>");
   trigger_error($err, E_USER_ERROR);
 }
 

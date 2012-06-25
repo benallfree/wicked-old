@@ -83,8 +83,7 @@ class ActiveRecord
   {
     $obj_name = singularize(tableize($this->klass));
     $event_name = "{$obj_name}_{$event_name}";
-    $event_args[$obj_name] = $this;
-    event($event_name, $this);
+    do_action($event_name, $this, $event_args);
   }
   
   static function _find($klass, $params=array())
@@ -114,7 +113,7 @@ class ActiveRecord
   {
     $tn = singularize(tableize($klass));
     $event_name = "{$tn}_before_select";
-    $params = event($event_name, $params);
+    $params = do_filter($event_name, $params);
     
   	$tn = ActiveRecord::_model_table_name($klass);
     $columns = "$tn.*";
@@ -712,21 +711,37 @@ class ActiveRecord
   	}
 
   	// validate uniqueness
-  	$fields = eval("return $klass::\$validates_uniqueness_of;");
-  	foreach($fields as $field)
+  	$field_sets = eval("return $klass::\$validates_uniqueness_of;");
+  	foreach($field_sets as $field_set)
   	{
-    	if (is_object($this->$field)|| is_array($this->$field)) continue;
-    	if (array_key_exists($field, $this->errors)) continue;
-    	
+      $where = array('id <> ?');
+      foreach($field_set as $field_name)
+      {
+        $where[] = "`{$field_name}` = ?";
+      }
+      $s = join(" and ", $where);
+      $where = array($s, $this->id);
+      foreach($field_set as $field_name)
+      {
+        $where[] = $this->$field_name;
+      }
     	$params = array(
-        'conditions'=>array("`$field` = ? and {$this->pk()} <> ?", $this->$field, $this->id())
+        'conditions'=>$where,
       );
     	$c = eval("return $klass::count(\$params);");
     	if ($c>0)
     	{
-  			$this->errors[$field] = ' is already taken';
+        if(count($field_set)>1)
+        {
+          $this->errors[join(':',$field_set)] = ' combo is already taken';
+        } else {
+          foreach($field_set as $field_name)
+          {
+      			$this->errors[$field_name] = ' is already taken';
+      		}
+        }
   		}
-  	}  
+  	}
   	  		
   	
   	$this->is_valid = count($this->errors)==0;
