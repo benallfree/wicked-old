@@ -5,9 +5,9 @@ function deep_utf8_encode($v)
   if(is_string($v)) return is_utf8($v) ? $v : utf8_encode($v);
   if(is_array($v))
   {
-    for($i=0;$i<count($v);$i++)
+    foreach($v as $k=>$junk)
     {
-      $v[$i] = deep_utf8_encode($v[$i]);
+      $v[$k] = deep_utf8_encode($v[$k]);
     }
   }
   return $v;

@@ -41,7 +41,7 @@ function user_get_gcal_cal_service__d($u)
   return $service;
 }
 
-function user_gcal_delete_all($cal_id)
+function user_gcal_delete_all($u,$cal_id)
 {
   $nextPageToken = null;
   do
@@ -52,11 +52,15 @@ function user_gcal_delete_all($cal_id)
       $args['pageToken'] = $events['nextPageToken'];
     }    
     $events = $u->gcal_cal_service->events->listEvents($cal_id, $args);
-    foreach($events['items'] as $i)
+    if(isset($events['items']))
     {
-      if($i['status']=='cancelled') continue;
-      $res = $u->gcal_cal_service->events->delete($cal_id, $i['id']);
+      foreach($events['items'] as $i)
+      {
+        if($i['status']=='cancelled') continue;
+        $res = $u->gcal_cal_service->events->delete($cal_id, $i['id']);
+      }
     }
     $nextPageToken = isset($events['nextPageToken']) ? $events['nextPageToken'] : null;
   } while ($nextPageToken);
+  $u->set_meta('credit_slots', array());  
 }
