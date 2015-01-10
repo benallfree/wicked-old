@@ -96,7 +96,7 @@ class CacheCookie {
             @list($digest, $cookie_json) = explode('|', $cookie, 2);
             if (empty($digest) || empty($cookie_json) ||
                 !self::hash_equals($digest, hash_hmac(self::$config['digest_method'], $cookie_json,
-                                      self::$config['secret_key'])) {
+                                      self::$config['secret_key']))) {
                 $cookie_content = new \stdClass();
             } else {
                 $cookie_content = @json_decode($cookie_json);
