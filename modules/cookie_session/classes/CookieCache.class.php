@@ -4,7 +4,7 @@
 # Modified BCA
 
 class CacheCookie {
-    static var $config;
+    static $config;
     
     static function init($config)
     {
