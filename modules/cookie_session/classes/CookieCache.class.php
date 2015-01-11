@@ -95,8 +95,8 @@ class CacheCookie {
         } else {
             @list($digest, $cookie_json) = explode('|', $cookie, 2);
             if (empty($digest) || empty($cookie_json) ||
-                $digest !== hash_hmac(self::$config['digest_method'], $cookie_json,
-                                      self::$config['secret_key'])) {
+                !self::hash_equals($digest, hash_hmac(self::$config['digest_method'], $cookie_json,
+                                      self::$config['secret_key']))) {
                 $cookie_content = new \stdClass();
             } else {
                 $cookie_content = @json_decode($cookie_json);
@@ -106,5 +106,30 @@ class CacheCookie {
             $cookie_content = new \stdClass();
         }
         return $cookie_content;
+    }
+    
+
+    /**
+     * Prevent timing attack
+     * 
+     * @param  string $knownString
+     * @param  string $userString
+     * @return bool
+     */
+    public static function hash_equals($knownString, $userString)
+    {
+        if (function_exists('\hash_equals')) {
+            return \hash_equals($knownString, $userString);
+        }
+        if (strlen($knownString) !== strlen($userString)) {
+            return false;
+        }
+        $len = strlen($knownString);
+        $result = 0;
+        for ($i = 0; $i < $len; $i++) {
+            $result |= (ord($knownString[$i]) ^ ord($userString[$i]));
+        }
+        // They are only identical strings if $result is exactly 0...
+        return 0 === $result;
     }
 }
